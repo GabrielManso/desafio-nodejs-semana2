@@ -1,12 +1,6 @@
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import Transaction from '../models/Transaction';
 
-interface Request {
-  title: string;
-  value: number;
-  type: 'income' | 'outcome';
-}
-
 class CreateTransactionService {
   private transactionsRepository: TransactionsRepository;
 
@@ -14,14 +8,7 @@ class CreateTransactionService {
     this.transactionsRepository = transactionsRepository;
   }
 
-  public execute({ title, type, value }: Request): Transaction {
-    const;
-
-    const getBalanceBetweenIncomeAndOutcome = this.transactionsRepository
-      .getBalance
-      // Eu nao sei qual parametro passar aqui
-      ();
-  }
+  public execute(): Transaction {}
 }
 
 export default CreateTransactionService;
