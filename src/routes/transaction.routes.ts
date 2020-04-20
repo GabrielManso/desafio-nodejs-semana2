@@ -26,16 +26,13 @@ transactionRouter.post('/', (request, response) => {
       transactionsRepository,
     );
 
-    const transaction = transactionsRepository.create({
-      /* Eu acho que ta errado isso aqui, por que se eu nao me engano o Diego
-      usou para pegar as informações em outro arquivo
-      , mas eu nao lembro qual, mas talvez pode ser esse tbm */
-
-      id: uuid(),
+    const transaction = createTransaction.execute({
       title,
       value,
       type,
     });
+
+    return response.json(transaction);
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }

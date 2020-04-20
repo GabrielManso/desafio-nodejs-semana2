@@ -17,7 +17,7 @@ class TransactionsRepository {
     return this.transactions;
   }
 
-  public getBalance({ income, outcome, total }: Balance): Transaction {
+  public getBalance({ income, outcome, total }: Balance): Balance {
     // Eu nao sei se o tipo do metodo getBalance ta certo, o Transaction
     const getIncomeValues = this.transactions
       .filter(transaction => transaction.type === 'income')
@@ -33,21 +33,21 @@ class TransactionsRepository {
         outcome,
       );
 
-    const diferenceBetweenIncomeAndOutcome = getIncomeValues - getOutcomeValues;
+    const diferenceBetweenIncomeAndOutcome =
+      total + getIncomeValues - getOutcomeValues;
 
-    const getTotalValues = this.transactions.reduce(
-      newTotal => newTotal + diferenceBetweenIncomeAndOutcome,
-      total,
-    );
-
-    return getTotalValues;
+    return {
+      income: getIncomeValues,
+      outcome: getOutcomeValues,
+      total: diferenceBetweenIncomeAndOutcome,
+    };
   }
 
   public create({ title, type, value }: Transaction): Transaction {
     const transaction = new Transaction({
       title,
-      type: 'income' || 'outcome',
       value,
+      type,
     });
 
     this.transactions.push(transaction);

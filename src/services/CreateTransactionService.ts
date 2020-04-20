@@ -15,12 +15,9 @@ class CreateTransactionService {
   }
 
   public execute({ title, type, value }: Request): Transaction {
-    const;
-
-    const getBalanceBetweenIncomeAndOutcome = this.transactionsRepository
-      .getBalance
-      // Eu nao sei qual parametro passar aqui
-      ();
+    const getBalanceBetweenIncomeAndOutcome = this.transactionsRepository.getBalance(
+      {},
+    );
   }
 }
 
