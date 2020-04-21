@@ -1,3 +1,4 @@
+import { uuid } from 'uuidv4';
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import Transaction from '../models/Transaction';
 
@@ -15,9 +16,22 @@ class CreateTransactionService {
   }
 
   public execute({ title, type, value }: Request): Transaction {
+    const transaction = this.transactionsRepository.create({
+      id: uuid(),
+      title,
+      type,
+      value,
+    });
+
     const getBalanceBetweenIncomeAndOutcome = this.transactionsRepository.getBalance(
-      {},
+      {
+        id: uuid(),
+        title,
+        type,
+        value,
+      },
     );
+    return transaction;
   }
 }
 

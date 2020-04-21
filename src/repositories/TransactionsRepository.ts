@@ -17,25 +17,30 @@ class TransactionsRepository {
     return this.transactions;
   }
 
-  public getBalance({ income, outcome, total }: Balance): Balance {
-    // Eu nao sei se o tipo do metodo getBalance ta certo, o Transaction
-    const getIncomeValues = this.transactions
-      .filter(transaction => transaction.type === 'income')
-      .reduce(
-        (newIncome, transaction) => newIncome + transaction.value,
+  public getBalance({ value, type }: Transaction): Balance {
+    const income = 0;
+    const outcome = 0;
+    let getIncomeValues = 0;
+    let getOutcomeValues = 0;
+    if (type === 'income') {
+      getIncomeValues = this.transactions.reduce(
+        newIncome => newIncome + value,
         income,
       );
-
-    const getOutcomeValues = this.transactions
-      .filter(transaction => transaction.type === 'outcome')
-      .reduce(
-        (newOutcome, transaction) => newOutcome + transaction.value,
+    }
+    if (type === 'outcome') {
+      getOutcomeValues = this.transactions.reduce(
+        newOutcome => newOutcome + value,
         outcome,
       );
+    }
+    const diferenceBetweenIncomeAndOutcome = getIncomeValues - getOutcomeValues;
 
-    const diferenceBetweenIncomeAndOutcome =
-      total + getIncomeValues - getOutcomeValues;
-
+    if (diferenceBetweenIncomeAndOutcome < 0) {
+      throw Error(
+        'You can`t  do the transaction. Please add an income transaction first',
+      );
+    }
     return {
       income: getIncomeValues,
       outcome: getOutcomeValues,
